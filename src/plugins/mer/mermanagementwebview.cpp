@@ -255,7 +255,7 @@ void MerManagementWebView::resetWebView()
 
     if (m_selectedSdk) {
         disconnect(m_selectedSdk->connection(), &MerConnection::virtualMachineOffChanged,
-                ui->webView, &QWebView::reload);
+                this, &MerManagementWebView::resetWebView);
     }
 
     m_selectedSdk = m_sdksModel->sdkAt(ui->sdksComboBox->currentIndex());
@@ -264,7 +264,7 @@ void MerManagementWebView::resetWebView()
         url = QUrl(QLatin1String(CONTROLCENTER_URL_BASE));
         url.setPort(m_selectedSdk->wwwPort());
         connect(m_selectedSdk->connection(), &MerConnection::virtualMachineOffChanged,
-                ui->webView, &QWebView::reload);
+                this, &MerManagementWebView::resetWebView);
     } else {
         url = QLatin1String("about:blank");
     }
