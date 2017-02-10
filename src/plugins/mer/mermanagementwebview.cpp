@@ -236,6 +236,11 @@ MerManagementWebView::MerManagementWebView(QWidget *parent)
     connect(ui->webView, &QWebView::loadFinished,
             this, [this]() { setEnabled(true); },
             Qt::QueuedConnection);
+
+    connect(ui->webView, &QWebView::loadProgress,
+            this, [this](int prog) { ui->progressBar->setValue(prog < 100 ? prog : 0); });
+    connect(ui->webView, &QWebView::loadFinished,
+            this, [this]() { ui->progressBar->setValue(0); });
 }
 
 MerManagementWebView::~MerManagementWebView()
